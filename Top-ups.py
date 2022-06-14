@@ -40,7 +40,27 @@ def lowest(matches): # Calculate cheapest match
 while True: # Loop continually
     matches = []
     print("--------------------------")
-    target = int(input('Desired total (multiple of 5): ')) # Custom target
+    
+    validTarget = False
+    while not validTarget:
+        try:
+            target = float(input('\nEnter desired top-up target (multiple of 5): ')) # Input target
+        except ValueError: # If non-numeric
+            print('Input must be numeric!')
+            continue
+        else:
+            if target <= 0:  # If input isn't positive
+                print('Your value must be greater than zero!')
+                continue
+
+        if target % 5 != 0: # If not multiple of 5
+            print('Enter a multiple of 5!')
+
+        else: # All criteria met!
+            validTarget = True
+            target = int(target) # For presentation
+
+    print(f'\nFinding combinations for £{target}')
 
     combos(target, [q for q in topups if q <= target]) # Ascertain all possible combinations of top-ups for a given value
     print(f'{len(matches)} possible combinations.\n')
